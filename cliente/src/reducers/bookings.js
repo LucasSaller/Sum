@@ -10,12 +10,12 @@ export default (bookings = [], action) => {
   switch (action.type) {
     case FETCH_ALL:
       return action.payload;
-    case CREATE: {
+    case CREATE:
       return [...bookings, action.payload];
-    }
-    case DELETE: {
+
+    case DELETE:
       return bookings.filter((booking) => booking._id !== action.payload);
-    }
+
     default:
       return bookings;
   }

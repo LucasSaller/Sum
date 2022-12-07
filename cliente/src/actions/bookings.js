@@ -26,11 +26,12 @@ export const createBooking = (booking) => async (dispatch) => {
   }
 };
 
-export const deleteBooking = (bookingId) => async (dispatch) => {
+export const deleteBooking = (id) => async (dispatch) => {
   try {
-    await api.deleteBooking(bookingId);
-    dispatch({ type: DELETE, payload: bookingId });
+    await api.deleteBooking(id);
+
+    dispatch({ type: DELETE, payload: id });
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 };

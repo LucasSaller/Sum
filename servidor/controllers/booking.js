@@ -1,3 +1,6 @@
+import express from "express";
+import mongoose from "mongoose";
+
 import Booking from "../models/booking.js";
 
 export const getBookings = async (req, res) => {
@@ -21,8 +24,11 @@ export const createBooking = async (req, res) => {
 };
 export const deleteBooking = async (req, res) => {
   const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(_id))
-    return res.status(404).send("No post with that id");
-  await Booking.findByIdAndRemnove(id);
-  return res.json({ message: "Post deleted succesfully" });
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No booking with id: ${id}`);
+
+  await Booking.findByIdAndRemove(id);
+
+  res.json({ message: "Booking deleted successfully." });
 };
