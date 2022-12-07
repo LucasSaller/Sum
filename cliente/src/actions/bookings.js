@@ -11,7 +11,6 @@ export const getBookings = () => async (dispatch) => {
   try {
     const { data } = await api.fetchBookings();
     dispatch({ type: FETCH_ALL, payload: data });
-    console.log(data);
   } catch (error) {
     console.log(error.message);
   }

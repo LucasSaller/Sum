@@ -24,18 +24,21 @@ const Form = () => {
   };
 
   const existBooking = (newDate) => {
+    const listaBookings = bookings;
+    // console.log(listaBookings);
+    // const resultado = listaBookings.some((booking) => booking.date === newDate);
+    // console.log(resultado);
     return bookings.some((booking) => booking.date === newDate);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(bookingData.date);
-    // console.log(existBooking(bookingData.date));
-    // if (existBooking(bookingData.date)) {
-    dispatch(createBooking(bookingData));
-    // } else {
-    //   console.log("Ya esta reservado ese dia");
-    // }
+    console.log(bookingData);
+    if (!existBooking(bookingData.date)) {
+      dispatch(createBooking(bookingData));
+    } else {
+      console.log("Ya esta reservado ese dia"); //TOAST
+    }
   };
 
   const clearForm = () => {
