@@ -1,41 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs from "dayjs";
 import { TextField, Paper, Button, Select, MenuItem } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Stack } from "@mui/system";
-import { useDispatch, useSelector } from "react-redux";
-import { createBooking, updatePost } from "../../actions/bookings";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { createBooking, getBookings } from "../../actions/bookings";
 
 const Form = () => {
-  const [value, setValue] = React.useState(dayjs());
+  const [value, setValue] = React.useState(dayjs().format("DD/MM/YYYY"));
   const [bookingData, setBookingData] = useState({
     name: "",
     apartment: "",
-    date: "",
+    date: value,
     time: "",
   });
-  const bookings = useSelector((state) => state.bookings);
+
   const dispatch = useDispatch();
+  const bookings = useSelector((state) => state.bookings, shallowEqual);
+
   const handleChange = (newValue) => {
     setValue(newValue);
     setBookingData({ ...bookingData, date: newValue.format("DD/MM/YYYY") });
   };
 
-  const existBooking = (newDate) => {
+  const addBooking = (booking) => {
+    dispatch(createBooking(booking));
+  };
+  const existBooking = (newDate, time) => {
     const listaBookings = bookings;
     // console.log(listaBookings);
     // const resultado = listaBookings.some((booking) => booking.date === newDate);
     // console.log(resultado);
-    return bookings.some((booking) => booking.date === newDate);
+    return bookings.some(
+      (booking) => booking.date === newDate && booking.time === time
+    );
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(bookingData);
-    if (!existBooking(bookingData.date)) {
-      dispatch(createBooking(bookingData));
+    if (
+      bookingData.name.trim() === "" ||
+      bookingData.apartment.trim() === "" ||
+      bookingData.date.trim() === "" ||
+      bookingData.time.trim() === ""
+    ) {
+      alert("Estas intentando cargar una reserva vacia flaco");
+      return;
+    }
+    if (!existBooking(bookingData.date, bookingData.time)) {
+      addBooking(bookingData);
+      clearForm();
     } else {
       console.log("Ya esta reservado ese dia"); //TOAST
     }

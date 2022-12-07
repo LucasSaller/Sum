@@ -7,7 +7,7 @@ import {
   Grid,
   AppBar,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getBookings } from "./actions/bookings";
 import Bookings from "./components/Bookings/Bookings";
 import Form from "./components/Form/Form";
@@ -21,7 +21,7 @@ const App = () => {
     <Container maxWidth="lg">
       <AppBar position="static" color="inherit">
         <Typography variant="h4" align="center">
-          Bookings
+          Reservas
         </Typography>
       </AppBar>
       <Grow in>

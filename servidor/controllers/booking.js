@@ -10,13 +10,19 @@ export const getBookings = async (req, res) => {
 };
 
 export const createBooking = async (req, res) => {
-  const booking = req.body;
-  console.log(booking);
-  const newBooking = new Booking(booking);
+  const { name, apartment, date, time } = req.body;
+  const newBooking = new Booking({ name, apartment, date, time });
   try {
     await newBooking.save();
     res.status(201).json(newBooking);
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
+};
+export const deleteBooking = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(_id))
+    return res.status(404).send("No post with that id");
+  await Booking.findByIdAndRemnove(id);
+  return res.json({ message: "Post deleted succesfully" });
 };

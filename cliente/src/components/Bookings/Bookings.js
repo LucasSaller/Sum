@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Booking from "./Booking/Booking";
-import { useSelector } from "react-redux";
-import { Card, CircularProgress, Grid } from "@mui/material";
+import { shallowEqual, useSelector } from "react-redux";
+import { Card, CircularProgress, Grid, Grow } from "@mui/material";
 const Bookings = () => {
-  const bookings = useSelector((state) => state.bookings);
+  const bookings = useSelector((state) => state.bookings, shallowEqual);
+  console.log(bookings);
   return !bookings.length ? (
-    <CircularProgress />
+    <>
+      <p>Buscando reservas..</p>
+      <CircularProgress />
+    </>
   ) : (
     <Grid container alignItems="stretch" spacing={3}>
       {bookings.map((booking, id) => {
         return (
-          <Card key={id}>
-            <p>{booking.date}</p>
-          </Card>
+          <Grow in key={id}>
+            <Grid item xs={12} sm={6}>
+              <Booking booking={booking} />
+            </Grid>
+          </Grow>
         );
       })}
     </Grid>
