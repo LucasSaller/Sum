@@ -6,9 +6,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Stack } from "@mui/system";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { createBooking, getBookings } from "../../actions/bookings";
+import { createBooking, updateBooking } from "../../actions/bookings";
 
-const Form = () => {
+const Form = ({ setCurrentId, currentId }) => {
   const [value, setValue] = React.useState(dayjs().format("DD/MM/YYYY"));
   const [bookingData, setBookingData] = useState({
     name: "",
@@ -16,23 +16,23 @@ const Form = () => {
     date: value,
     time: "",
   });
-
-  const dispatch = useDispatch();
   const bookings = useSelector((state) => state.bookings, shallowEqual);
+  const booking = useSelector((state) =>
+    currentId
+      ? state.bookings.find((booking) => booking._id === currentId)
+      : null
+  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (booking) setBookingData(booking);
+  }, [booking, currentId]);
 
   const handleChange = (newValue) => {
     setValue(newValue);
     setBookingData({ ...bookingData, date: newValue.format("DD/MM/YYYY") });
   };
 
-  const addBooking = (booking) => {
-    dispatch(createBooking(booking));
-  };
   const existBooking = (newDate, time) => {
-    const listaBookings = bookings;
-    // console.log(listaBookings);
-    // const resultado = listaBookings.some((booking) => booking.date === newDate);
-    // console.log(resultado);
     return bookings.some(
       (booking) => booking.date === newDate && booking.time === time
     );
@@ -49,15 +49,18 @@ const Form = () => {
       alert("Estas intentando cargar una reserva vacia flaco");
       return;
     }
-    if (!existBooking(bookingData.date, bookingData.time)) {
-      addBooking(bookingData);
-      clearForm();
+    if (currentId) {
+      dispatch(updateBooking(currentId, bookingData));
+    } else if (!existBooking(bookingData.date, bookingData.time)) {
+      dispatch(createBooking(bookingData));
     } else {
       console.log("Ya esta reservado ese dia"); //TOAST
     }
+    clearForm();
   };
 
   const clearForm = () => {
+    setCurrentId(null);
     setBookingData({
       name: "",
       apartment: "",
@@ -70,7 +73,7 @@ const Form = () => {
     <>
       <Paper style={{ padding: "10px 20px" }}>
         <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-          <h3>Anotate con este formulario</h3>
+          <h3>{currentId ? "Edita tu reserva" : "Crea una nueva Reserva"}</h3>
           <Stack direction="column" spacing={2}>
             <TextField
               name="name"
@@ -120,7 +123,7 @@ const Form = () => {
               type="submit"
               fullWidth
             >
-              Reservar
+              {currentId ? "Editar" : "Reservar"}
             </Button>
             <Button
               variant="contained"

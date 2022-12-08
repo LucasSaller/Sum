@@ -12,7 +12,10 @@ export default (bookings = [], action) => {
       return action.payload;
     case CREATE:
       return [...bookings, action.payload];
-
+    case UPDATE:
+      return bookings.map((booking) =>
+        booking._id === action.payload._id ? action.payload : booking
+      );
     case DELETE:
       return bookings.filter((booking) => booking._id !== action.payload);
 

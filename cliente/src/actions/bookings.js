@@ -26,6 +26,14 @@ export const createBooking = (booking) => async (dispatch) => {
   }
 };
 
+export const updateBooking = (id, booking) => async (dispatch) => {
+  try {
+    const { data } = await api.updateBooking(id, booking);
+    dispatch({ type: UPDATE, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const deleteBooking = (id) => async (dispatch) => {
   try {
     await api.deleteBooking(id);

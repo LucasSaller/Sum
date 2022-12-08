@@ -22,6 +22,21 @@ export const createBooking = async (req, res) => {
     res.status(409).json({ message: error.message });
   }
 };
+
+export const updateBooking = async (req, res) => {
+  const { id } = req.params;
+  const { name, apartment, date, time } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No booking with id: ${id}`);
+
+  const updatedBooking = { name, apartment, date, time, _id: id };
+
+  await Booking.findByIdAndUpdate(id, updatedBooking, { new: true });
+
+  res.json(updatedBooking);
+};
+
 export const deleteBooking = async (req, res) => {
   const { id } = req.params;
 

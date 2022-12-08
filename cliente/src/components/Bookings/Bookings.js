@@ -2,9 +2,8 @@ import React, { useEffect } from "react";
 import Booking from "./Booking/Booking";
 import { shallowEqual, useSelector } from "react-redux";
 import { Card, CircularProgress, Grid, Grow } from "@mui/material";
-const Bookings = () => {
+const Bookings = ({ setCurrentId }) => {
   const bookings = useSelector((state) => state.bookings, shallowEqual);
-  console.log(bookings);
   return !bookings.length ? (
     <>
       <p>Buscando reservas..</p>
@@ -16,7 +15,7 @@ const Bookings = () => {
         return (
           <Grow in key={id}>
             <Grid item xs={12} sm={6}>
-              <Booking booking={booking} />
+              <Booking booking={booking} setCurrentId={setCurrentId} />
             </Grid>
           </Grow>
         );
