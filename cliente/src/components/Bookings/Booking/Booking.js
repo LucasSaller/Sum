@@ -9,24 +9,31 @@ const Booking = ({ booking, setCurrentId }) => {
   const dispatch = useDispatch();
 
   return (
-    <Paper>
-      <IconButton aria-label="edit" onClick={() => setCurrentId(booking._id)}>
-        <EditIcon />
-      </IconButton>
-      <Stack direction="row" spacing={3} padding={3}>
-        <Typography>{booking.name}</Typography>
-        <Typography>{booking.apartment}</Typography>
-        <Typography>{booking.date}</Typography>
-        <Typography>{booking.time}</Typography>
+    <Stack
+      direction="row"
+      spacing={6}
+      paddingY={1}
+      paddingX={2}
+      alignItems="center"
+      position="relative"
+    >
+      <Typography>{booking.name}</Typography>
+      <Typography>{booking.apartment}</Typography>
+      <Typography>{booking.date}</Typography>
+      <Typography>{booking.time}</Typography>
+      <Stack position="absolute" direction="row" right="0">
+        <IconButton aria-label="edit" onClick={() => setCurrentId(booking._id)}>
+          <EditIcon />
+        </IconButton>
+        <IconButton
+          aria-label="delete"
+          color="error"
+          onClick={() => dispatch(deleteBooking(booking._id))}
+        >
+          <DeleteIcon />
+        </IconButton>
       </Stack>
-      <IconButton
-        aria-label="delete"
-        color="error"
-        onClick={() => dispatch(deleteBooking(booking._id))}
-      >
-        <DeleteIcon />
-      </IconButton>
-    </Paper>
+    </Stack>
   );
 };
 

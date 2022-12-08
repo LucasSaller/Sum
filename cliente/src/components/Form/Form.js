@@ -9,7 +9,7 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { createBooking, updateBooking } from "../../actions/bookings";
 
 const Form = ({ setCurrentId, currentId }) => {
-  const [value, setValue] = React.useState(dayjs().format("DD/MM/YYYY"));
+  const [value, setValue] = React.useState(dayjs());
   const [bookingData, setBookingData] = useState({
     name: "",
     apartment: "",
@@ -97,6 +97,7 @@ const Form = ({ setCurrentId, currentId }) => {
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DesktopDatePicker
+                disablePast
                 label="Fecha de reserva"
                 inputFormat="DD/MM/YYYY"
                 value={value}
@@ -104,16 +105,17 @@ const Form = ({ setCurrentId, currentId }) => {
                 renderInput={(params) => <TextField {...params} />}
               />
             </LocalizationProvider>
-            <Select
+            <TextField
               value={bookingData.time}
-              label="Time"
+              select
+              label="Turno"
               onChange={(e) =>
                 setBookingData({ ...bookingData, time: e.target.value })
               }
             >
               <MenuItem value="dia">Dia</MenuItem>
               <MenuItem value="noche">Noche</MenuItem>
-            </Select>
+            </TextField>
           </Stack>
           <Stack direction="row" padding={2} spacing={2}>
             <Button
