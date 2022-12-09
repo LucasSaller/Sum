@@ -1,39 +1,38 @@
+import React from "react";
 import { Paper, Typography, IconButton } from "@mui/material";
 import { Stack } from "@mui/system";
-import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch } from "react-redux";
 import { deleteBooking } from "../../../actions/bookings";
 import EditIcon from "@mui/icons-material/Edit";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+
 const Booking = ({ booking, setCurrentId }) => {
   const dispatch = useDispatch();
 
   return (
-    <Stack
-      direction="row"
-      spacing={6}
-      paddingY={1}
-      paddingX={2}
-      alignItems="center"
-      position="relative"
-    >
-      <Typography>{booking.name}</Typography>
-      <Typography>{booking.apartment}</Typography>
-      <Typography>{booking.date}</Typography>
-      <Typography>{booking.time}</Typography>
-      <Stack position="absolute" direction="row" right="0">
-        <IconButton aria-label="edit" onClick={() => setCurrentId(booking._id)}>
-          <EditIcon />
-        </IconButton>
-        <IconButton
-          aria-label="delete"
-          color="error"
-          onClick={() => dispatch(deleteBooking(booking._id))}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </Stack>
-    </Stack>
+    <TableContainer component={Paper}>
+      <Table>
+        <TableBody>
+          <TableRow
+            key={booking.name}
+            sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+          >
+            <TableCell component="th" scope="row">
+              {booking.name}
+            </TableCell>
+            <TableCell align="right">{booking.apartment}</TableCell>
+            <TableCell align="right">{booking.date}</TableCell>
+            <TableCell align="right">{booking.time}</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

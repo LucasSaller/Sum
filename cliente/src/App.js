@@ -70,12 +70,8 @@ const App = () => {
               alt="logo"
             />
 
-            <IconButton>
-              {darkMode ? (
-                <DarkModeIcon onClick={handleDarkMode} />
-              ) : (
-                <LightModeIcon color="warning" onClick={handleDarkMode} />
-              )}
+            <IconButton onClick={handleDarkMode}>
+              {darkMode ? <DarkModeIcon /> : <LightModeIcon color="warning" />}
             </IconButton>
           </Stack>
         </AppBar>

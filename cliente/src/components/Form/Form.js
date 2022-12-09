@@ -113,8 +113,8 @@ const Form = ({ setCurrentId, currentId }) => {
                 setBookingData({ ...bookingData, time: e.target.value })
               }
             >
-              <MenuItem value="dia">Dia</MenuItem>
-              <MenuItem value="noche">Noche</MenuItem>
+              <MenuItem value="Dia☀">Dia ☀</MenuItem>
+              <MenuItem value="Noche🌙">Noche 🌙</MenuItem>
             </TextField>
           </Stack>
           <Stack direction="row" padding={2} spacing={2}>
