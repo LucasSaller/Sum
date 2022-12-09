@@ -16,13 +16,11 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Stack } from "@mui/system";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import { useDispatch } from "react-redux";
 import { deleteBooking } from "../../actions/bookings";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
+import DeleteForeverTwoToneIcon from "@mui/icons-material/DeleteForeverTwoTone";
+import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 const Bookings = ({ setCurrentId }) => {
   const dispatch = useDispatch();
   const matches = useMediaQuery("(max-width:600px)");
@@ -55,7 +53,7 @@ const Bookings = ({ setCurrentId }) => {
                 aria-label="edit"
                 onClick={() => setCurrentId(booking._id)}
               >
-                <EditIcon />
+                <EditTwoToneIcon />
               </IconButton>
               <IconButton
                 size="small"
@@ -63,7 +61,7 @@ const Bookings = ({ setCurrentId }) => {
                 color="error"
                 onClick={() => dispatch(deleteBooking(booking._id))}
               >
-                <DeleteIcon />
+                <DeleteForeverTwoToneIcon />
               </IconButton>
             </CardActions>
           </Card>
@@ -80,7 +78,10 @@ const Bookings = ({ setCurrentId }) => {
   ) : (
     <>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table
+          sx={{ minWidth: 650, fontWeight: "bold" }}
+          aria-label="simple table"
+        >
           <TableHead>
             <TableRow>
               <TableCell>Nombre</TableCell>
@@ -109,9 +110,10 @@ const Bookings = ({ setCurrentId }) => {
                     <IconButton
                       size="small"
                       aria-label="edit"
+                      color="warning"
                       onClick={() => setCurrentId(booking._id)}
                     >
-                      <EditIcon />
+                      <EditTwoToneIcon />
                     </IconButton>
                     <IconButton
                       size="small"
@@ -119,7 +121,7 @@ const Bookings = ({ setCurrentId }) => {
                       color="error"
                       onClick={() => dispatch(deleteBooking(booking._id))}
                     >
-                      <DeleteIcon />
+                      <DeleteForeverTwoToneIcon />
                     </IconButton>
                   </TableCell>
                 </TableRow>

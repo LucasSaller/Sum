@@ -49,9 +49,12 @@ const Form = ({ setCurrentId, currentId }) => {
       alert("Estas intentando cargar una reserva vacia flaco");
       return;
     }
-    if (currentId) {
+    if (currentId && !existBooking(bookingData.date, bookingData.time)) {
       dispatch(updateBooking(currentId, bookingData));
-    } else if (!existBooking(bookingData.date, bookingData.time)) {
+    } else {
+      console.log("Ya esta reservado ese dia"); //TOAST
+    }
+    if (!existBooking(bookingData.date, bookingData.time)) {
       dispatch(createBooking(bookingData));
     } else {
       console.log("Ya esta reservado ese dia"); //TOAST
@@ -113,8 +116,8 @@ const Form = ({ setCurrentId, currentId }) => {
                 setBookingData({ ...bookingData, time: e.target.value })
               }
             >
-              <MenuItem value="Dia☀">Dia ☀</MenuItem>
-              <MenuItem value="Noche🌙">Noche 🌙</MenuItem>
+              <MenuItem value="Dia">Dia</MenuItem>
+              <MenuItem value="Noche">Noche</MenuItem>
             </TextField>
           </Stack>
           <Stack direction="row" padding={2} spacing={2}>
