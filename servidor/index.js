@@ -21,3 +21,5 @@ mongoose
     app.listen(PORT, () => console.log(`Server runing on port ${PORT} `))
   )
   .catch((error) => console.log(error.message));
+
+module.exports = app;
