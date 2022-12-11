@@ -10,6 +10,9 @@ app.use(bodyParser.json({ extended: true }));
 app.use(cors());
 
 app.use("/bookings", bookingRoutes);
+app.get("/", (request, response) => {
+  response.send("Hola mundo");
+});
 
 const CONNECTION_URL =
   "mongodb+srv://lsaller:DZ9LwfOsNt6YJ6Ly@cluster0.zzcukbh.mongodb.net/?retryWrites=true&w=majority";
@@ -22,6 +25,4 @@ mongoose
   )
   .catch((error) => console.log(error.message));
 
-app.get("/", (request, response) => {
-  response.send("Hola mundo");
-});
+module.exports = app;
