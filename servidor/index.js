@@ -1,8 +1,8 @@
-import express from "express";
-import bodyParser from "body-parser";
-import mongoose from "mongoose";
-import cors from "cors";
-import bookingRoutes from "./routes/bookings.js";
+const express = require("express");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const bookingRou = require("./routes/bookings.js");
 
 const app = express();
 
