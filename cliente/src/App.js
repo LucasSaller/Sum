@@ -8,14 +8,13 @@ import {
   Box,
   IconButton,
 } from "@mui/material";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
+
 import { useDispatch } from "react-redux";
 import { getBookings } from "./actions/bookings";
 import Bookings from "./components/Bookings/Bookings";
 import Form from "./components/Form/Form";
-import logo from "./assets/logo.png";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import NavBar from "./components/NavBar/NavBar";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -58,23 +57,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box style={{ minHeight: "100vh" }}>
-        <AppBar position="static" color="primary" style={{ padding: 6 }}>
-          <Stack direction="row" justifyContent="center" alignItems="center">
-            <img
-              style={{
-                margin: "0 auto",
-              }}
-              src={logo}
-              width="100px"
-              height="30px"
-              alt="logo"
-            />
-
-            <IconButton onClick={handleDarkMode}>
-              {darkMode ? <DarkModeIcon /> : <LightModeIcon color="warning" />}
-            </IconButton>
-          </Stack>
-        </AppBar>
+        <NavBar handleDarkMode={handleDarkMode} darkMode={darkMode} />
         <Grow in>
           <Container style={{ marginTop: "24px" }}>
             <Grid
