@@ -25,4 +25,3 @@ mongoose
 app.get("/", (request, response) => {
   response.send("Hola mundo");
 });
-module.exports = app;
