@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const Booking = "../models/booking.js";
+const Booking = require("../models/booking.js");
 
 exports.getBookings = async (req, res) => {
   try {
