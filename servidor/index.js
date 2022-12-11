@@ -14,7 +14,7 @@ app.use("/bookings", bookingRoutes);
 const CONNECTION_URL =
   "mongodb+srv://lsaller:DZ9LwfOsNt6YJ6Ly@cluster0.zzcukbh.mongodb.net/?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 5000;
-
+mongoose.set("strictQuery", true);
 mongoose
   .connect(CONNECTION_URL)
   .then(() =>
