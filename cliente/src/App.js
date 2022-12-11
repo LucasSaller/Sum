@@ -66,11 +66,11 @@ const App = () => {
               alignItems="stretch"
               spacing={3}
             >
-              <Grid item xs={12} sm={8}>
-                <Bookings setCurrentId={setCurrentId} />
-              </Grid>
               <Grid item xs={12} sm={4}>
                 <Form currentId={currentId} setCurrentId={setCurrentId} />
+              </Grid>
+              <Grid item xs={12} sm={8}>
+                <Bookings setCurrentId={setCurrentId} />
               </Grid>
             </Grid>
           </Container>

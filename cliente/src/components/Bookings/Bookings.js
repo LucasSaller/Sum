@@ -6,6 +6,7 @@ import {
   CircularProgress,
   Grid,
   Grow,
+  Stack,
   Paper,
   IconButton,
   CardActions,
@@ -21,6 +22,7 @@ import { deleteBooking } from "../../actions/bookings";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import DeleteForeverTwoToneIcon from "@mui/icons-material/DeleteForeverTwoTone";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
+
 const Bookings = ({ setCurrentId }) => {
   const dispatch = useDispatch();
   const matches = useMediaQuery("(max-width:600px)");
@@ -34,49 +36,43 @@ const Bookings = ({ setCurrentId }) => {
     (a, b) => makeDate(a.date) - makeDate(b.date)
   );
   const MobileBookings = ({ booking }) => {
-    return !bookings.length ? (
-      <>
-        <p>Buscando reservas..</p>
-        <CircularProgress />
-      </>
-    ) : (
-      <Grid container>
-        <Grid item xs={4}>
-          <Card>
-            <p>{booking.name}</p>
-            <p>{booking.apartment}</p>
-            <p>{booking.date}</p>
-            <p>{booking.time}</p>
-            <CardActions disableSpacing>
-              <IconButton
-                size="small"
-                aria-label="edit"
-                onClick={() => setCurrentId(booking._id)}
-              >
-                <EditTwoToneIcon />
-              </IconButton>
-              <IconButton
-                size="small"
-                aria-label="delete"
-                color="error"
-                onClick={() => dispatch(deleteBooking(booking._id))}
-              >
-                <DeleteForeverTwoToneIcon />
-              </IconButton>
-            </CardActions>
-          </Card>
-        </Grid>
-      </Grid>
+    return (
+      <Paper borderRadius="0">
+        <Stack
+          direction="row"
+          spacing={2}
+          padding={2}
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <p>{booking.name}</p>
+          <p>{booking.apartment}</p>
+          <p>{booking.date}</p>
+          <p>{booking.time}</p>
+          <CardActions disableSpacing>
+            <IconButton
+              size="small"
+              aria-label="edit"
+              onClick={() => setCurrentId(booking._id)}
+            >
+              <EditTwoToneIcon />
+            </IconButton>
+            <IconButton
+              size="small"
+              aria-label="delete"
+              color="error"
+              onClick={() => dispatch(deleteBooking(booking._id))}
+            >
+              <DeleteForeverTwoToneIcon />
+            </IconButton>
+          </CardActions>
+        </Stack>
+      </Paper>
     );
   };
 
-  return !bookings.length ? (
-    <>
-      <p>Buscando reservas..</p>
-      <CircularProgress />
-    </>
-  ) : (
-    <>
+  const DesktopBookings = () => {
+    return (
       <TableContainer component={Paper}>
         <Table
           sx={{ minWidth: 650, fontWeight: "bold" }}
@@ -91,15 +87,10 @@ const Bookings = ({ setCurrentId }) => {
               <TableCell align="left">&nbsp;</TableCell>
             </TableRow>
           </TableHead>
-          {sortedBookings.map((booking, id) =>
-            matches ? (
-              <MobileBookings key={id} booking={booking} />
-            ) : (
-              <TableBody key={id}>
-                <TableRow
-                  key={id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
+          <TableBody>
+            {sortedBookings.map((booking, id) => (
+              <>
+                <TableRow>
                   <TableCell component="th" scope="row">
                     {booking.name}
                   </TableCell>
@@ -125,11 +116,28 @@ const Bookings = ({ setCurrentId }) => {
                     </IconButton>
                   </TableCell>
                 </TableRow>
-              </TableBody>
-            )
-          )}
+              </>
+            ))}
+          </TableBody>
         </Table>
       </TableContainer>
+    );
+  };
+  return !bookings.length ? (
+    <>
+      <p>Buscando reservas..</p>
+      <CircularProgress />
+    </>
+  ) : (
+    <>
+      <h2>Reservas</h2>
+      {matches ? (
+        sortedBookings.map((booking, id) => (
+          <MobileBookings key={id} booking={booking} />
+        ))
+      ) : (
+        <DesktopBookings />
+      )}
     </>
   );
 };
