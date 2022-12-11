@@ -22,4 +22,7 @@ mongoose
   )
   .catch((error) => console.log(error.message));
 
+app.get("/", (request, response) => {
+  response.send("Hola mundo");
+});
 module.exports = app;
