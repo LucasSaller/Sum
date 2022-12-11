@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.json({ extended: true }));
 app.use(cors());
 
-app.use("/bookings", bookingRoutes);
+app.use("/api/bookings", bookingRoutes);
 app.get("/", (request, response) => {
   response.send("Hola mundo");
 });
