@@ -1,36 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs from "dayjs";
-import {
-  TextField,
-  Paper,
-  Button,
-  Select,
-  MenuItem,
-  Typography,
-} from "@mui/material";
+import { TextField, Paper, Button, MenuItem } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Stack } from "@mui/system";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { createBooking, updateBooking } from "../../actions/bookings";
-
+import { useLocation } from "react-router-dom";
 const Form = ({ setCurrentId, currentId }) => {
-  const [value, setValue] = React.useState(dayjs());
-  const user = JSON.parse(localStorage.getItem("profile"));
-  const [bookingData, setBookingData] = useState({
-    name: "",
-    apartment: "",
-    date: value,
-    time: "",
-  });
+  const location = useLocation();
+  const dispatch = useDispatch();
   const bookings = useSelector((state) => state.bookings, shallowEqual);
   const booking = useSelector((state) =>
     currentId
       ? state.bookings.find((booking) => booking._id === currentId)
       : null
   );
-  const dispatch = useDispatch();
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const [value, setValue] = React.useState(dayjs());
+  const [bookingData, setBookingData] = useState({
+    name: "",
+    apartment: "",
+    date: value,
+    time: "",
+  });
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("profile")));
+  }, [location]);
+
   useEffect(() => {
     if (booking) setBookingData(booking);
   }, [booking, currentId]);
@@ -83,11 +82,9 @@ const Form = ({ setCurrentId, currentId }) => {
   };
   if (!user?.data?.name) {
     return (
-      <Paper>
-        <Typography variant="h6" align="center">
-          Porfavor inicia sesion para poder crear una reserva
-        </Typography>
-      </Paper>
+      <h3 style={{ textAlign: "center" }}>
+        Para poder crear una reserva tenes que iniciar sesion 😄
+      </h3>
     );
   }
   return (

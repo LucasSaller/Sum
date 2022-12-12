@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getBookings } from "../../actions/bookings";
-import { Container, Grow, Grid } from "@mui/material";
+import { Container, Grow, Grid, Box } from "@mui/material";
 
 import Bookings from "../../components/Bookings/Bookings";
 import Form from "../../components/Form/Form";
@@ -22,8 +22,15 @@ const Home = () => {
           alignItems="stretch"
           spacing={3}
         >
-          <Grid item xs={12} sm={4}>
-            <Form currentId={currentId} setCurrentId={setCurrentId} />
+          <Grid
+            item
+            xs={12}
+            sm={4}
+            style={{ display: "flex", alignItems: "center" }}
+          >
+            <Box>
+              <Form currentId={currentId} setCurrentId={setCurrentId} />
+            </Box>
           </Grid>
           <Grid item xs={12} sm={8}>
             <Bookings setCurrentId={setCurrentId} />
