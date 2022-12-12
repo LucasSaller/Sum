@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs from "dayjs";
-import { TextField, Paper, Button, MenuItem, Snackbar } from "@mui/material";
+import {
+  TextField,
+  Paper,
+  Button,
+  MenuItem,
+  Snackbar,
+  AlertTitle,
+} from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Stack } from "@mui/system";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { createBooking, updateBooking } from "../../actions/bookings";
 import { useLocation } from "react-router-dom";
+import Alert from "@mui/material/Alert";
+
 const Form = ({ setCurrentId, currentId }) => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -19,7 +28,7 @@ const Form = ({ setCurrentId, currentId }) => {
   );
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  const [value, setValue] = React.useState(dayjs());
+  const [value, setValue] = React.useState(dayjs().format("DD/MM/YYYY"));
   const [snackBar, setSnackBar] = useState({
     open: false,
     message: "",
@@ -49,12 +58,23 @@ const Form = ({ setCurrentId, currentId }) => {
       (booking) => booking.date === newDate && booking.time === time
     );
   };
+  const clearForm = () => {
+    setCurrentId(null);
+    setBookingData({
+      name: "",
+      apartment: "",
+      date: dayjs().format("DD/MM/YYYY"),
+      time: "",
+    });
+    console.log("Estoy cleariando el form");
+  };
 
   const handleClose = () => {
     setSnackBar({ name: false, message: "" });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(bookingData);
     if (
       bookingData.name.trim() === "" ||
       bookingData.apartment.trim() === "" ||
@@ -64,6 +84,7 @@ const Form = ({ setCurrentId, currentId }) => {
       setSnackBar({
         open: true,
         message: "Estas intentando cargar una reserva vacia",
+        severity: "error",
       });
       return;
     }
@@ -71,32 +92,18 @@ const Form = ({ setCurrentId, currentId }) => {
       dispatch(
         updateBooking(currentId, { ...bookingData, creator: user?.data.sub })
       );
-    } else {
-      setSnackBar({
-        open: true,
-        message: "Ese dia ya se encuentra reservado en el turno que elegiste",
-      }); //TOAST
-    }
-    if (!existBooking(bookingData.date, bookingData.time)) {
+    } else if (!existBooking(bookingData.date, bookingData.time)) {
       dispatch(createBooking({ ...bookingData, creator: user?.data.sub }));
     } else {
       setSnackBar({
         open: true,
         message: "Ese dia ya se encuentra reservado en el turno que elegiste",
+        severity: "error",
       });
     }
     clearForm();
   };
 
-  const clearForm = () => {
-    setCurrentId(null);
-    setBookingData({
-      name: "",
-      apartment: "",
-      date: "",
-      time: "",
-    });
-  };
   if (!user?.data?.name) {
     return (
       <h3 style={{ textAlign: "center" }}>
@@ -176,8 +183,13 @@ const Form = ({ setCurrentId, currentId }) => {
             open={snackBar.open}
             onClose={handleClose}
             autoHideDuration={3000}
-            message={snackBar.message}
-          />
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+          >
+            <Alert severity={snackBar.severity}>{snackBar.message}</Alert>
+          </Snackbar>
         </form>
       </Paper>
     </>

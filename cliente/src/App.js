@@ -9,6 +9,11 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const backgroundDark = "linear-gradient(-20deg, #2b5876 0%, #4e4376 100%)";
+  const backgroundDark2 =
+    "linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%)";
+  const backgroundLight = "linear-gradient(to top, #6a85b6 0%, #bac8e0 100%)";
+
   const theme = createTheme({
     palette: {
       mode: darkMode ? "dark" : "light",
@@ -43,7 +48,14 @@ const App = () => {
     <GoogleOAuthProvider clientId="329361314054-k518ne5s1qh23v3m9jt1ao25o38tu0kh.apps.googleusercontent.com">
       <BrowserRouter>
         <ThemeProvider theme={theme}>
-          <Box style={{ minHeight: "100vh" }}>
+          <Box
+            style={{
+              minHeight: "100vh",
+              backgroundImage: `${
+                darkMode ? backgroundDark2 : backgroundLight
+              }`,
+            }}
+          >
             <NavBar handleDarkMode={handleDarkMode} darkMode={darkMode} />
             <Routes>
               <Route path="/" exact element={<Home />} />

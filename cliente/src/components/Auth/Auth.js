@@ -53,61 +53,15 @@ const Auth = () => {
 
   return (
     <Container maxWidth="sm">
-      <Paper style={{ padding: "20px", marginTop: 20 }}>
-        <Avatar>
-          <LockOutlinedIcon />
-        </Avatar>
-        <h4>{isSignedUp ? "Sign up" : "Iniciar Sesion"}</h4>
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            {isSignedUp && (
-              <>
-                <Input
-                  name="firstName"
-                  label="Nombre"
-                  autoFocus
-                  onChange={handleChange}
-                />
-                <Input
-                  name="firstName"
-                  label="Nombre"
-                  autoFocus
-                  onChange={handleChange}
-                />
-              </>
-            )}
-            <Input
-              name="email"
-              label="Email"
-              handleChange={handleChange}
-              type="email"
-            />
-            <Input
-              name="password"
-              label="Password"
-              handleChange={handleChange}
-              type={showPassword ? "text" : "password"}
-              handleShowPassword={handleShowPassword}
-            />
-            {isSignedUp && (
-              <Input
-                name="confirmPassword"
-                label="Repetir contrasenia"
-                handleChange={handleChange}
-                type="password"
-              />
-            )}
-          </Grid>
-          <GoogleLogin
-            type="icon"
-            logo_alignment="center"
-            shape="circle"
-            size="medium"
-            text=""
-            onSuccess={googleSucces}
-            onError={() => console.log("Login Failed")}
-          />
-        </form>
+      <Paper style={{ padding: "20px", marginTop: 20, textAlign: "center" }}>
+        <h3>Inicia Sesion con Google</h3>
+        <GoogleLogin
+          logo_alignment="center"
+          size="medium"
+          text=""
+          onSuccess={googleSucces}
+          onError={() => console.log("Login Failed")}
+        />
       </Paper>
     </Container>
   );

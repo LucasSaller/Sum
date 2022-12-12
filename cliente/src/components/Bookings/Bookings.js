@@ -55,6 +55,7 @@ const Bookings = ({ setCurrentId }) => {
               <IconButton
                 size="small"
                 aria-label="edit"
+                color="warning"
                 onClick={() => setCurrentId(booking._id)}
               >
                 <EditTwoToneIcon />
@@ -130,19 +131,21 @@ const Bookings = ({ setCurrentId }) => {
   };
   return !bookings.length ? (
     <>
-      <p>Buscando reservas..</p>
+      <h4>Buscando reservas..</h4>
       <CircularProgress />
     </>
   ) : (
     <>
       <h2>Reservas</h2>
-      {matches ? (
-        sortedBookings.map((booking, id) => (
-          <MobileBookings key={id} booking={booking} />
-        ))
-      ) : (
-        <DesktopBookings />
-      )}
+      <Stack direction="column" spacing={2}>
+        {matches ? (
+          sortedBookings.map((booking, id) => (
+            <MobileBookings key={id} booking={booking} />
+          ))
+        ) : (
+          <DesktopBookings />
+        )}
+      </Stack>
     </>
   );
 };
