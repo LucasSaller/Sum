@@ -24,6 +24,7 @@ const Home = () => {
         >
           <Grid
             item
+            justifyContent="center"
             xs={12}
             sm={4}
             style={{ display: "flex", alignItems: "center" }}

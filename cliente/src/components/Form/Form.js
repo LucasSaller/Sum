@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs from "dayjs";
-import { TextField, Paper, Button, MenuItem } from "@mui/material";
+import { TextField, Paper, Button, MenuItem, Snackbar } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Stack } from "@mui/system";
@@ -17,8 +17,13 @@ const Form = ({ setCurrentId, currentId }) => {
       ? state.bookings.find((booking) => booking._id === currentId)
       : null
   );
+
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [value, setValue] = React.useState(dayjs());
+  const [snackBar, setSnackBar] = useState({
+    open: false,
+    message: "",
+  });
   const [bookingData, setBookingData] = useState({
     name: "",
     apartment: "",
@@ -45,6 +50,9 @@ const Form = ({ setCurrentId, currentId }) => {
     );
   };
 
+  const handleClose = () => {
+    setSnackBar({ name: false, message: "" });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -53,7 +61,10 @@ const Form = ({ setCurrentId, currentId }) => {
       bookingData.date.trim() === "" ||
       bookingData.time.trim() === ""
     ) {
-      alert("Estas intentando cargar una reserva vacia flaco");
+      setSnackBar({
+        open: true,
+        message: "Estas intentando cargar una reserva vacia",
+      });
       return;
     }
     if (currentId && !existBooking(bookingData.date, bookingData.time)) {
@@ -61,12 +72,18 @@ const Form = ({ setCurrentId, currentId }) => {
         updateBooking(currentId, { ...bookingData, creator: user?.data.sub })
       );
     } else {
-      console.log("Ya esta reservado ese dia"); //TOAST
+      setSnackBar({
+        open: true,
+        message: "Ese dia ya se encuentra reservado en el turno que elegiste",
+      }); //TOAST
     }
     if (!existBooking(bookingData.date, bookingData.time)) {
       dispatch(createBooking({ ...bookingData, creator: user?.data.sub }));
     } else {
-      console.log("Ya esta reservado ese dia"); //TOAST
+      setSnackBar({
+        open: true,
+        message: "Ese dia ya se encuentra reservado en el turno que elegiste",
+      });
     }
     clearForm();
   };
@@ -155,6 +172,12 @@ const Form = ({ setCurrentId, currentId }) => {
               Limpiar
             </Button>
           </Stack>
+          <Snackbar
+            open={snackBar.open}
+            onClose={handleClose}
+            autoHideDuration={3000}
+            message={snackBar.message}
+          />
         </form>
       </Paper>
     </>
