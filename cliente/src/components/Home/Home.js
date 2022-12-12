@@ -4,7 +4,6 @@ import { getBookings } from "../../actions/bookings";
 import { Container, Grow, Grid, Box } from "@mui/material";
 import Bookings from "../../components/Bookings/Bookings";
 import Form from "../../components/Form/Form";
-import ParticlesWeb from "../ParticlesWeb";
 const Home = () => {
   const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState(null);
@@ -24,18 +23,14 @@ const Home = () => {
             alignItems="stretch"
             spacing={3}
           >
-            <Grid
-              item
-              justifyContent="center"
-              xs={12}
-              sm={4}
-              style={{ display: "flex", alignItems: "center" }}
-            >
+            <Grid item justifyContent="center" xs={12} sm={4}>
               <Box>
+                <h2>Gestiona tus reservas</h2>
                 <Form currentId={currentId} setCurrentId={setCurrentId} />
               </Box>
             </Grid>
-            <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={8} style={{ marginBottom: 30 }}>
+              <h2>Reservas</h2>
               <Bookings setCurrentId={setCurrentId} />
             </Grid>
           </Grid>

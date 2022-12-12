@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import "./styles.css";
 import dayjs from "dayjs";
 import {
   TextField,
@@ -8,15 +9,22 @@ import {
   MenuItem,
   Snackbar,
   AlertTitle,
+  Card,
+  Typography,
+  Grow,
+  Fab,
 } from "@mui/material";
+
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Stack } from "@mui/system";
+import { Box, Stack } from "@mui/system";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { createBooking, updateBooking } from "../../actions/bookings";
 import { useLocation } from "react-router-dom";
 import Alert from "@mui/material/Alert";
-
+const styles = {
+  input: {},
+};
 const Form = ({ setCurrentId, currentId }) => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -34,7 +42,6 @@ const Form = ({ setCurrentId, currentId }) => {
     message: "",
   });
   const [bookingData, setBookingData] = useState({
-    name: "",
     apartment: "",
     date: value,
     time: "",
@@ -63,10 +70,9 @@ const Form = ({ setCurrentId, currentId }) => {
     setBookingData({
       name: "",
       apartment: "",
-      date: dayjs().format("DD/MM/YYYY"),
+      date: value?.format("DD/MM/YYYY"),
       time: "",
     });
-    console.log("Estoy cleariando el form");
   };
 
   const handleClose = () => {
@@ -76,7 +82,6 @@ const Form = ({ setCurrentId, currentId }) => {
     e.preventDefault();
     console.log(bookingData);
     if (
-      bookingData.name.trim() === "" ||
       bookingData.apartment.trim() === "" ||
       bookingData.date.trim() === "" ||
       bookingData.time.trim() === ""
@@ -90,10 +95,20 @@ const Form = ({ setCurrentId, currentId }) => {
     }
     if (currentId && !existBooking(bookingData.date, bookingData.time)) {
       dispatch(
-        updateBooking(currentId, { ...bookingData, creator: user?.data.sub })
+        updateBooking(currentId, {
+          ...bookingData,
+          creator: user?.data.sub,
+          name: user?.data.name,
+        })
       );
     } else if (!existBooking(bookingData.date, bookingData.time)) {
-      dispatch(createBooking({ ...bookingData, creator: user?.data.sub }));
+      dispatch(
+        createBooking({
+          ...bookingData,
+          creator: user?.data.sub,
+          name: user?.data.name,
+        })
+      );
     } else {
       setSnackBar({
         open: true,
@@ -106,35 +121,32 @@ const Form = ({ setCurrentId, currentId }) => {
 
   if (!user?.data?.name) {
     return (
-      <h3 style={{ textAlign: "center" }}>
-        Para poder crear una reserva tenes que iniciar sesion 😄
-      </h3>
+      <Grow in>
+        <h3>Para poder crear una reserva tenes que iniciar sesion 😄</h3>
+      </Grow>
     );
   }
   return (
     <>
       <Paper style={{ padding: "10px 20px" }}>
-        <form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        <form autoComplete="off" onSubmit={handleSubmit}>
           <h3>{currentId ? "Edita tu reserva" : "Crea una nueva Reserva"}</h3>
           <Stack direction="column" spacing={2}>
             <TextField
-              name="name"
-              variant="outlined"
-              label="Nombre"
-              fullWidth
-              value={bookingData.name}
-              onChange={(e) =>
-                setBookingData({ ...bookingData, name: e.target.value })
-              }
-            />
-            <TextField
               name="apartment"
+              inputProps={{
+                className: "Input",
+                pattern: "[0-9]{1,2}[a-zA-Z]",
+              }}
               variant="outlined"
-              label="Apartamento"
+              label="Departamento"
               fullWidth
               value={bookingData.apartment}
               onChange={(e) =>
-                setBookingData({ ...bookingData, apartment: e.target.value })
+                setBookingData({
+                  ...bookingData,
+                  apartment: e.target.value.toUpperCase(),
+                })
               }
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -159,7 +171,7 @@ const Form = ({ setCurrentId, currentId }) => {
               <MenuItem value="Noche">Noche</MenuItem>
             </TextField>
           </Stack>
-          <Stack direction="row" padding={2} spacing={2}>
+          <Stack direction="row" paddingY={2} spacing={2}>
             <Button
               variant="contained"
               color="primary"
@@ -170,7 +182,7 @@ const Form = ({ setCurrentId, currentId }) => {
               {currentId ? "Editar" : "Reservar"}
             </Button>
             <Button
-              variant="contained"
+              variant="outlined"
               color="secondary"
               size="small"
               fullWidth

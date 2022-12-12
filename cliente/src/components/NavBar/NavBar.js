@@ -59,7 +59,7 @@ const NavBar = ({ handleDarkMode, darkMode }) => {
               component={Link}
               to="/auth"
               variant="contained"
-              color="secondary"
+              color="error"
             >
               Iniciar Sesion
             </Button>

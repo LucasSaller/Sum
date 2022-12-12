@@ -4,12 +4,12 @@ import { shallowEqual, useSelector } from "react-redux";
 import {
   Card,
   CircularProgress,
-  Grid,
-  Grow,
+  Box,
   Stack,
   Paper,
   IconButton,
   CardActions,
+  Typography,
 } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -33,23 +33,25 @@ const Bookings = ({ setCurrentId }) => {
     const [_, dd, mm, yyyy] = str.match(/(\d{2})\/(\d{2})\/(\d{4})/);
     return new Date(yyyy, mm - 1, dd);
   };
-  const sortedBookings = bookings.sort(
-    (a, b) => makeDate(a.date) - makeDate(b.date)
-  );
+  const sortedBookings = bookings.sort((a, b) => {
+    const date1 = +makeDate(a.date);
+    const date2 = +makeDate(b.date);
+    return date1 === date2 ? (a.time === "Noche" ? 1 : -1) : date1 - date2;
+  });
   const MobileBookings = ({ booking }) => {
     return (
-      <Paper borderRadius="0">
+      <Paper>
         <Stack
           direction="row"
-          spacing={2}
-          padding={2}
+          spacing={3}
+          paddingX={2}
           alignItems="center"
-          justifyContent="space-between"
+          justifyContent="left"
         >
-          <p>{booking.name}</p>
-          <p>{booking.apartment}</p>
-          <p>{booking.date}</p>
-          <p>{booking.time}</p>
+          <h5>{booking.name}</h5>
+          <h5>{booking.apartment}</h5>
+          <h5>{booking.date}</h5>
+          <h5>{booking.time}</h5>
           {user?.data.sub === booking.creator && (
             <CardActions disableSpacing>
               <IconButton
@@ -85,10 +87,10 @@ const Bookings = ({ setCurrentId }) => {
           <TableHead>
             <TableRow>
               <TableCell>Nombre</TableCell>
-              <TableCell align="left">Departamento</TableCell>
-              <TableCell align="left">Dia&nbsp;</TableCell>
-              <TableCell align="left">Turno&nbsp;</TableCell>
-              <TableCell align="left">&nbsp;</TableCell>
+              <TableCell align="center">Departamento</TableCell>
+              <TableCell align="center">Dia&nbsp;</TableCell>
+              <TableCell align="center">Turno&nbsp;</TableCell>
+              <TableCell align="right">Acciones&nbsp;</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -97,9 +99,9 @@ const Bookings = ({ setCurrentId }) => {
                 <TableCell component="th" scope="row">
                   {booking.name}
                 </TableCell>
-                <TableCell align="left">{booking.apartment}</TableCell>
-                <TableCell align="left">{booking.date}</TableCell>
-                <TableCell align="left">{booking.time}</TableCell>
+                <TableCell align="center">{booking.apartment}</TableCell>
+                <TableCell align="center">{booking.date}</TableCell>
+                <TableCell align="center">{booking.time}</TableCell>
                 <TableCell align="right">
                   {user?.data.sub === booking.creator && (
                     <>
@@ -136,8 +138,16 @@ const Bookings = ({ setCurrentId }) => {
     </>
   ) : (
     <>
-      <h2>Reservas</h2>
       <Stack direction="column" spacing={2}>
+        {matches && (
+          <Box display="flex" gap={4}>
+            <Typography variant="p">Nombre</Typography>
+            <Typography variant="p">Depto</Typography>
+            <Typography variant="p">Dia</Typography>
+            <Typography variant="p">Turno</Typography>
+            <Typography variant="p">Acciones</Typography>
+          </Box>
+        )}
         {matches ? (
           sortedBookings.map((booking, id) => (
             <MobileBookings key={id} booking={booking} />

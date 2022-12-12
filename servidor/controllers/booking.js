@@ -12,9 +12,9 @@ exports.getBookings = async (req, res) => {
 };
 
 exports.createBooking = async (req, res) => {
-  const { name, apartment, date, time, creator } = req.body;
+  const { apartment, date, time, creator } = req.body;
   console.log(req.body);
-  const newBooking = new Booking({ name, apartment, date, time, creator });
+  const newBooking = new Booking({ apartment, date, time, creator });
   try {
     await newBooking.save();
     res.status(201).json(newBooking);
@@ -25,12 +25,12 @@ exports.createBooking = async (req, res) => {
 
 exports.updateBooking = async (req, res) => {
   const { id } = req.params;
-  const { name, apartment, date, time } = req.body;
+  const { apartment, date, time } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No booking with id: ${id}`);
 
-  const updatedBooking = { name, apartment, date, time, _id: id };
+  const updatedBooking = { apartment, date, time, _id: id };
 
   await Booking.findByIdAndUpdate(id, updatedBooking, { new: true });
 
