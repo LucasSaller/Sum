@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { getBookings } from "../../actions/bookings";
-import { Container, Grow, Grid, Box } from "@mui/material";
+import { Container, Grow, Grid, Box, Typography } from "@mui/material";
 import Bookings from "../../components/Bookings/Bookings";
 import Form from "../../components/Form/Form";
 const Home = () => {
@@ -24,13 +24,17 @@ const Home = () => {
             spacing={3}
           >
             <Grid item justifyContent="center" xs={12} sm={4}>
+              <Typography variant="h5" m={1} color="headers.main">
+                Gestiona tus reservas
+              </Typography>
               <Box>
-                <h2>Gestiona tus reservas</h2>
                 <Form currentId={currentId} setCurrentId={setCurrentId} />
               </Box>
             </Grid>
             <Grid item xs={12} sm={8} style={{ marginBottom: 30 }}>
-              <h2>Reservas</h2>
+              <Typography variant="h5" m={1} color="headers.main">
+                Reservas
+              </Typography>
               <Bookings setCurrentId={setCurrentId} />
             </Grid>
           </Grid>

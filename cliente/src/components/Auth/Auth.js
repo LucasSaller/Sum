@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Paper } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Container } from "@mui/system";
 import { GoogleLogin, googleLogout, useGoogleLogin } from "@react-oauth/google";
@@ -28,19 +28,19 @@ const Auth = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Paper style={{ padding: "20px", marginTop: 20, textAlign: "center" }}>
-        <h3>Inicia Sesion con Google</h3>
-        <GoogleLogin
-          className="button-google"
-          logo_alignment="center"
-          size="medium"
-          text=""
-          onSuccess={googleSucces}
-          onError={() => console.log("Login Failed")}
-        />
-      </Paper>
-    </Container>
+    <Paper style={{ padding: "20px", textAlign: "center" }}>
+      <Typography variant="h6" fontWeight="bold">
+        Para poder crear una reserva
+      </Typography>
+      <GoogleLogin
+        className="button-google"
+        logo_alignment="center"
+        size="medium"
+        text=""
+        onSuccess={googleSucces}
+        onError={() => console.log("Login Failed")}
+      />
+    </Paper>
   );
 };
 

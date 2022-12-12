@@ -22,6 +22,7 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { createBooking, updateBooking } from "../../actions/bookings";
 import { useLocation } from "react-router-dom";
 import Alert from "@mui/material/Alert";
+import Auth from "../Auth/Auth";
 const styles = {
   input: {},
 };
@@ -120,11 +121,7 @@ const Form = ({ setCurrentId, currentId }) => {
   };
 
   if (!user?.data?.name) {
-    return (
-      <Grow in>
-        <h3>Para poder crear una reserva tenes que iniciar sesion 😄</h3>
-      </Grow>
-    );
+    return <Auth />;
   }
   return (
     <>

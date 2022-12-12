@@ -30,7 +30,12 @@ const NavBar = ({ handleDarkMode, darkMode }) => {
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
   return (
-    <AppBar position="static" color="primary" style={{ padding: 6 }}>
+    <AppBar
+      position="static"
+      color="nav"
+      style={{ padding: 6 }}
+      enableColorOnDark
+    >
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <IconButton onClick={handleDarkMode}>
           {darkMode ? <DarkModeIcon /> : <LightModeIcon color="warning" />}
@@ -59,7 +64,7 @@ const NavBar = ({ handleDarkMode, darkMode }) => {
               component={Link}
               to="/auth"
               variant="contained"
-              color="error"
+              color="login"
             >
               Iniciar Sesion
             </Button>
