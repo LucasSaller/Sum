@@ -12,8 +12,9 @@ exports.getBookings = async (req, res) => {
 };
 
 exports.createBooking = async (req, res) => {
-  const { name, apartment, date, time } = req.body;
-  const newBooking = new Booking({ name, apartment, date, time });
+  const { name, apartment, date, time, creator } = req.body;
+  console.log(req.body);
+  const newBooking = new Booking({ name, apartment, date, time, creator });
   try {
     await newBooking.save();
     res.status(201).json(newBooking);

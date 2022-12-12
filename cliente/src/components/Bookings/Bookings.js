@@ -27,6 +27,7 @@ const Bookings = ({ setCurrentId }) => {
   const dispatch = useDispatch();
   const matches = useMediaQuery("(max-width:600px)");
   const bookings = useSelector((state) => state.bookings, shallowEqual);
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   const makeDate = (str) => {
     const [_, dd, mm, yyyy] = str.match(/(\d{2})\/(\d{2})\/(\d{4})/);
@@ -49,23 +50,25 @@ const Bookings = ({ setCurrentId }) => {
           <p>{booking.apartment}</p>
           <p>{booking.date}</p>
           <p>{booking.time}</p>
-          <CardActions disableSpacing>
-            <IconButton
-              size="small"
-              aria-label="edit"
-              onClick={() => setCurrentId(booking._id)}
-            >
-              <EditTwoToneIcon />
-            </IconButton>
-            <IconButton
-              size="small"
-              aria-label="delete"
-              color="error"
-              onClick={() => dispatch(deleteBooking(booking._id))}
-            >
-              <DeleteForeverTwoToneIcon />
-            </IconButton>
-          </CardActions>
+          {user?.data.sub === booking.creator && (
+            <CardActions disableSpacing>
+              <IconButton
+                size="small"
+                aria-label="edit"
+                onClick={() => setCurrentId(booking._id)}
+              >
+                <EditTwoToneIcon />
+              </IconButton>
+              <IconButton
+                size="small"
+                aria-label="delete"
+                color="error"
+                onClick={() => dispatch(deleteBooking(booking._id))}
+              >
+                <DeleteForeverTwoToneIcon />
+              </IconButton>
+            </CardActions>
+          )}
         </Stack>
       </Paper>
     );
@@ -89,34 +92,36 @@ const Bookings = ({ setCurrentId }) => {
           </TableHead>
           <TableBody>
             {sortedBookings.map((booking, id) => (
-              <>
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                    {booking.name}
-                  </TableCell>
-                  <TableCell align="left">{booking.apartment}</TableCell>
-                  <TableCell align="left">{booking.date}</TableCell>
-                  <TableCell align="left">{booking.time}</TableCell>
-                  <TableCell align="right">
-                    <IconButton
-                      size="small"
-                      aria-label="edit"
-                      color="warning"
-                      onClick={() => setCurrentId(booking._id)}
-                    >
-                      <EditTwoToneIcon />
-                    </IconButton>
-                    <IconButton
-                      size="small"
-                      aria-label="delete"
-                      color="error"
-                      onClick={() => dispatch(deleteBooking(booking._id))}
-                    >
-                      <DeleteForeverTwoToneIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              </>
+              <TableRow key={id}>
+                <TableCell component="th" scope="row">
+                  {booking.name}
+                </TableCell>
+                <TableCell align="left">{booking.apartment}</TableCell>
+                <TableCell align="left">{booking.date}</TableCell>
+                <TableCell align="left">{booking.time}</TableCell>
+                <TableCell align="right">
+                  {user?.data.sub === booking.creator && (
+                    <>
+                      <IconButton
+                        size="small"
+                        aria-label="edit"
+                        color="warning"
+                        onClick={() => setCurrentId(booking._id)}
+                      >
+                        <EditTwoToneIcon />
+                      </IconButton>
+                      <IconButton
+                        size="small"
+                        aria-label="delete"
+                        color="error"
+                        onClick={() => dispatch(deleteBooking(booking._id))}
+                      >
+                        <DeleteForeverTwoToneIcon />
+                      </IconButton>
+                    </>
+                  )}
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>

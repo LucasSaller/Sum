@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs from "dayjs";
-import { TextField, Paper, Button, Select, MenuItem } from "@mui/material";
+import {
+  TextField,
+  Paper,
+  Button,
+  Select,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Stack } from "@mui/system";
@@ -10,6 +17,7 @@ import { createBooking, updateBooking } from "../../actions/bookings";
 
 const Form = ({ setCurrentId, currentId }) => {
   const [value, setValue] = React.useState(dayjs());
+  const user = JSON.parse(localStorage.getItem("profile"));
   const [bookingData, setBookingData] = useState({
     name: "",
     apartment: "",
@@ -50,12 +58,14 @@ const Form = ({ setCurrentId, currentId }) => {
       return;
     }
     if (currentId && !existBooking(bookingData.date, bookingData.time)) {
-      dispatch(updateBooking(currentId, bookingData));
+      dispatch(
+        updateBooking(currentId, { ...bookingData, creator: user?.data.sub })
+      );
     } else {
       console.log("Ya esta reservado ese dia"); //TOAST
     }
     if (!existBooking(bookingData.date, bookingData.time)) {
-      dispatch(createBooking(bookingData));
+      dispatch(createBooking({ ...bookingData, creator: user?.data.sub }));
     } else {
       console.log("Ya esta reservado ese dia"); //TOAST
     }
@@ -71,7 +81,15 @@ const Form = ({ setCurrentId, currentId }) => {
       time: "",
     });
   };
-
+  if (!user?.data?.name) {
+    return (
+      <Paper>
+        <Typography variant="h6" align="center">
+          Porfavor inicia sesion para poder crear una reserva
+        </Typography>
+      </Paper>
+    );
+  }
   return (
     <>
       <Paper style={{ padding: "10px 20px" }}>
