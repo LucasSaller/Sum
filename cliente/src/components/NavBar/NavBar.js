@@ -6,7 +6,6 @@ import {
   IconButton,
   Toolbar,
   Avatar,
-  Typography,
   Button,
 } from "@mui/material";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -14,11 +13,30 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch } from "react-redux";
+import { GoogleLogin, googleLogout, useGoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
+
 const NavBar = ({ handleDarkMode, darkMode }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const googleSucces = async (res) => {
+    const token = res.credential;
+    const decoded = jwt_decode(res.credential);
+    const { name, picture, sub } = decoded;
+    const data = {
+      name,
+      picture,
+      sub,
+    };
+    try {
+      dispatch({ type: "AUTH", data: { data, token } });
+      navigate("/");
+    } catch (error) {}
+  };
+
   const logout = () => {
     dispatch({ type: "LOGOUT" });
     navigate("/");
@@ -60,14 +78,22 @@ const NavBar = ({ handleDarkMode, darkMode }) => {
               </IconButton>
             </Stack>
           ) : (
-            <Button
-              component={Link}
-              to="/auth"
-              variant="contained"
-              color="login"
-            >
-              Iniciar Sesion
-            </Button>
+            // <Button
+            //   component={Link}
+            //   to="/auth"
+            //   variant="contained"
+            //   color="login"
+            // >
+            //   Iniciar Sesion
+            // </Button>
+            <GoogleLogin
+              className="button-google"
+              logo_alignment="center"
+              size="medium"
+              text=""
+              onSuccess={googleSucces}
+              onError={() => console.log("Login Failed")}
+            />
           )}
         </Toolbar>
       </Stack>

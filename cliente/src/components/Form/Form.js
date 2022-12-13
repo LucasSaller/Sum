@@ -102,6 +102,7 @@ const Form = ({ setCurrentId, currentId }) => {
           name: user?.data.name,
         })
       );
+      clearForm();
     } else if (!existBooking(bookingData.date, bookingData.time)) {
       dispatch(
         createBooking({
@@ -110,6 +111,7 @@ const Form = ({ setCurrentId, currentId }) => {
           name: user?.data.name,
         })
       );
+      clearForm();
     } else {
       setSnackBar({
         open: true,
@@ -117,7 +119,6 @@ const Form = ({ setCurrentId, currentId }) => {
         severity: "error",
       });
     }
-    clearForm();
   };
 
   if (!user?.data?.name) {
