@@ -15,12 +15,14 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch } from "react-redux";
 import { GoogleLogin, googleLogout, useGoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const NavBar = ({ handleDarkMode, darkMode }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const matches = useMediaQuery("(max-width:600px)");
 
   const googleSucces = async (res) => {
     const token = res.credential;
@@ -47,6 +49,28 @@ const NavBar = ({ handleDarkMode, darkMode }) => {
 
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
+
+  const GoogleButton = () => {
+    return matches ? (
+      <GoogleLogin
+        className="button-google"
+        logo_alignment="center"
+        size="small"
+        text="ALU GOMEZ"
+        shape="square"
+        onSuccess={googleSucces}
+        onError={() => console.log("Login Failed")}
+      />
+    ) : (
+      <GoogleLogin
+        className="button-google"
+        size="large"
+        text=""
+        onSuccess={googleSucces}
+        onError={() => console.log("Login Failed")}
+      />
+    );
+  };
   return (
     <AppBar
       position="static"
@@ -78,22 +102,7 @@ const NavBar = ({ handleDarkMode, darkMode }) => {
               </IconButton>
             </Stack>
           ) : (
-            // <Button
-            //   component={Link}
-            //   to="/auth"
-            //   variant="contained"
-            //   color="login"
-            // >
-            //   Iniciar Sesion
-            // </Button>
-            <GoogleLogin
-              className="button-google"
-              logo_alignment="center"
-              size="medium"
-              text=""
-              onSuccess={googleSucces}
-              onError={() => console.log("Login Failed")}
-            />
+            <GoogleButton />
           )}
         </Toolbar>
       </Stack>

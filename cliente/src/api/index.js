@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const url = "https://sum-omega.vercel.app/api/bookings";
-
+//const url = "https://sum-omega.vercel.app/api/bookings";
+const url = "http://localhost:5000/api/bookings";
 export const fetchBookings = () => axios.get(url);
 export const createBooking = (newBooking) => axios.post(url, newBooking);
 export const deleteBooking = (id) => axios.delete(`${url}/${id}`);

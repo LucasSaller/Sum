@@ -8,34 +8,16 @@ import {
   Button,
   MenuItem,
   Snackbar,
-  AlertTitle,
-  Card,
-  Typography,
-  Grow,
-  Fab,
+  Alert,
+  Stack,
 } from "@mui/material";
-
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Box, Stack } from "@mui/system";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { createBooking, updateBooking } from "../../actions/bookings";
 import { useLocation } from "react-router-dom";
-import Alert from "@mui/material/Alert";
-import Auth from "../Auth/Auth";
-const styles = {
-  input: {},
-};
-const Form = ({ setCurrentId, currentId }) => {
-  const location = useLocation();
-  const dispatch = useDispatch();
-  const bookings = useSelector((state) => state.bookings, shallowEqual);
-  const booking = useSelector((state) =>
-    currentId
-      ? state.bookings.find((booking) => booking._id === currentId)
-      : null
-  );
 
+const Form = ({ setCurrentId, currentId }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [value, setValue] = React.useState(dayjs().format("DD/MM/YYYY"));
   const [snackBar, setSnackBar] = useState({
@@ -47,6 +29,15 @@ const Form = ({ setCurrentId, currentId }) => {
     date: value,
     time: "",
   });
+
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const bookings = useSelector((state) => state.bookings, shallowEqual);
+  const booking = useSelector((state) =>
+    currentId
+      ? state.bookings.find((booking) => booking._id === currentId)
+      : null
+  );
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile")));
@@ -81,7 +72,6 @@ const Form = ({ setCurrentId, currentId }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(bookingData);
     if (
       bookingData.apartment.trim() === "" ||
       bookingData.date.trim() === "" ||
@@ -111,7 +101,6 @@ const Form = ({ setCurrentId, currentId }) => {
           name: user?.data.name,
         })
       );
-      clearForm();
     } else {
       setSnackBar({
         open: true,
@@ -122,7 +111,7 @@ const Form = ({ setCurrentId, currentId }) => {
   };
 
   if (!user?.data?.name) {
-    return <Auth />;
+    return <Alert severity="info">Para crear una reserva inicia sesion!</Alert>;
   }
   return (
     <>

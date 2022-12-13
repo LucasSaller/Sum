@@ -17,6 +17,7 @@ export const getBookings = () => async (dispatch) => {
   }
 };
 export const createBooking = (booking) => async (dispatch) => {
+  console.log(booking);
   try {
     const { data } = await api.createBooking(booking);
 

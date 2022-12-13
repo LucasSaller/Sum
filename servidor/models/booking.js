@@ -5,6 +5,7 @@ const bookingSchema = mongoose.Schema({
   date: String,
   time: String,
   creator: String,
+  name: String,
 });
 
 const Booking = mongoose.model("Booking", bookingSchema);

@@ -3,7 +3,6 @@ import { Box, Container } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./components/Home/Home";
-import Auth from "./components/Auth/Auth";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 const App = () => {
@@ -115,15 +114,6 @@ const App = () => {
             <NavBar handleDarkMode={handleDarkMode} darkMode={darkMode} />
             <Routes>
               <Route path="/" exact element={<Home />} />
-              <Route
-                path="/auth"
-                exact
-                element={
-                  <Container maxWidth="sm" style={{ marginTop: 40 }}>
-                    <Auth />
-                  </Container>
-                }
-              />
             </Routes>
           </Box>
         </ThemeProvider>
