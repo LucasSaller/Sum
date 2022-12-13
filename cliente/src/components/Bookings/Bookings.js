@@ -22,8 +22,10 @@ import { deleteBooking } from "../../actions/bookings";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import DeleteForeverTwoToneIcon from "@mui/icons-material/DeleteForeverTwoTone";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
+import { useLocation } from "react-router-dom";
 
 const Bookings = ({ setCurrentId }) => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const matches = useMediaQuery("(max-width:600px)");
   const bookings = useSelector((state) => state.bookings, shallowEqual);
@@ -38,6 +40,8 @@ const Bookings = ({ setCurrentId }) => {
     const date2 = +makeDate(b.date);
     return date1 === date2 ? (a.time === "Noche" ? 1 : -1) : date1 - date2;
   });
+
+  useEffect(() => {}, [location]);
   const MobileBookings = ({ booking }) => {
     return (
       <Paper>
