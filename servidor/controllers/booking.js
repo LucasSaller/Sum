@@ -25,12 +25,12 @@ exports.createBooking = async (req, res) => {
 
 exports.updateBooking = async (req, res) => {
   const { id } = req.params;
-  const { apartment, date, time, name } = req.body;
+  const { apartment, date, time, name, creator } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No booking with id: ${id}`);
 
-  const updatedBooking = { apartment, date, time, _id: id, name };
+  const updatedBooking = { apartment, date, time, _id: id, name, creator };
 
   await Booking.findByIdAndUpdate(id, updatedBooking, { new: true });
 

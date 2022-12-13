@@ -91,8 +91,8 @@ const Form = ({ setCurrentId, currentId }) => {
           creator: user?.data.sub,
           name: user?.data.name,
         })
+        //Despues de actualizar una booking, hay que refrescar la pag para que aparezcan los botones de editar y eliminar
       );
-      clearForm();
     } else if (!existBooking(bookingData.date, bookingData.time)) {
       dispatch(
         createBooking({
