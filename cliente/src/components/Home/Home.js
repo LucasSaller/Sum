@@ -27,7 +27,7 @@ const Home = ({ darkMode }) => {
             <Grid item justifyContent="center" xs={12} sm={4}>
               <Typography
                 variant="h5"
-                m={2}
+                my={2}
                 color="headers.main"
                 fontWeight="bold"
               >
@@ -40,7 +40,7 @@ const Home = ({ darkMode }) => {
             <Grid item xs={12} sm={8} style={{ marginBottom: 30 }}>
               <Typography
                 variant="h5"
-                m={2}
+                my={2}
                 color="headers.main"
                 fontWeight="bold"
               >

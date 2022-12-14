@@ -25,6 +25,10 @@ import BedtimeIcon from "@mui/icons-material/Bedtime";
 const Form = ({ setCurrentId, currentId }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [value, setValue] = React.useState(dayjs());
+  const [error, setError] = useState({
+    error: false,
+    helperText: "",
+  });
   const [snackBar, setSnackBar] = useState({
     open: false,
     message: "",
@@ -67,11 +71,26 @@ const Form = ({ setCurrentId, currentId }) => {
     setBookingData({
       name: "",
       apartment: "",
-      date: value,
+      date: value.format("DD/MM/YYYY"),
       time: "",
     });
   };
-
+  const isValidApartment = (apartment) => {
+    const regex = /\d{1,2}[A-Za-z]/gi;
+    regex.test(apartment);
+  };
+  const onBlurApartment = (event) => {
+    if (
+      event.target.value.length() >= 3 &&
+      isValidApartment(event.targe.value)
+    ) {
+      setBookingData({ ...bookingData, apartment: event.target.value });
+      setError({ error: false, helperText: "" });
+    } else {
+      setError({ error: true, helperText: "Es invalido el formato" });
+      return;
+    }
+  };
   const handleClose = () => {
     setSnackBar({ name: false, message: "" });
   };

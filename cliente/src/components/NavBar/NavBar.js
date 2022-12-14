@@ -73,9 +73,9 @@ const NavBar = ({ handleDarkMode, darkMode }) => {
   };
   return (
     <AppBar
-      position="static"
+      position="relative"
       color="nav"
-      style={{ padding: 6 }}
+      style={{ padding: 6, zIndex: "10" }}
       enableColorOnDark
     >
       <Stack direction="row" justifyContent="space-between" alignItems="center">
