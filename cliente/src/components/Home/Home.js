@@ -4,7 +4,8 @@ import { getBookings } from "../../actions/bookings";
 import { Container, Grow, Grid, Box, Typography } from "@mui/material";
 import Bookings from "../../components/Bookings/Bookings";
 import Form from "../../components/Form/Form";
-const Home = () => {
+import AnimatedBackground from "../AnimatedBackground/AnimatedBackground";
+const Home = ({ darkMode }) => {
   const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState(null);
 
@@ -14,9 +15,9 @@ const Home = () => {
 
   return (
     <>
-      {/* <ParticlesWeb /> */}
+      <AnimatedBackground darkMode={darkMode} />
       <Grow in>
-        <Container style={{ marginTop: "24px" }}>
+        <Container style={{ position: "relative", marginTop: "60px" }}>
           <Grid
             container
             justifyContent="space-between"
@@ -26,7 +27,7 @@ const Home = () => {
             <Grid item justifyContent="center" xs={12} sm={4}>
               <Typography
                 variant="h5"
-                m={1}
+                m={2}
                 color="headers.main"
                 fontWeight="bold"
               >
@@ -39,7 +40,7 @@ const Home = () => {
             <Grid item xs={12} sm={8} style={{ marginBottom: 30 }}>
               <Typography
                 variant="h5"
-                m={1}
+                m={2}
                 color="headers.main"
                 fontWeight="bold"
               >

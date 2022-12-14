@@ -12,6 +12,7 @@ import {
   Alert,
   Stack,
   ListItemText,
+  Typography,
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -20,6 +21,7 @@ import { createBooking, updateBooking } from "../../actions/bookings";
 import { useLocation } from "react-router-dom";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
+
 const Form = ({ setCurrentId, currentId }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [value, setValue] = React.useState(dayjs());
@@ -94,7 +96,6 @@ const Form = ({ setCurrentId, currentId }) => {
           creator: user?.data.sub,
           name: user?.data.name,
         })
-        //Despues de actualizar una booking, hay que refrescar la pag para que aparezcan los botones de editar y eliminar
       );
     } else if (!existBooking(bookingData.date, bookingData.time)) {
       dispatch(
@@ -120,7 +121,9 @@ const Form = ({ setCurrentId, currentId }) => {
     <>
       <Paper style={{ padding: "10px 20px" }}>
         <form autoComplete="off" onSubmit={handleSubmit}>
-          <h3>{currentId ? "Edita tu reserva" : "Crea una nueva Reserva"}</h3>
+          <Typography variant="h6" m={3} textAlign="center">
+            {currentId ? "Edita tu reserva" : "Crea una nueva reserva"}
+          </Typography>
           <Stack direction="column" spacing={2}>
             <TextField
               name="apartment"

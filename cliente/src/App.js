@@ -5,6 +5,7 @@ import NavBar from "./components/NavBar/NavBar";
 import Home from "./components/Home/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
   const backgroundDark = "linear-gradient(-20deg, #2b5876 0%, #4e4376 100%)";
@@ -60,7 +61,7 @@ const App = () => {
               contrastText: "#fff",
             },
             nav: {
-              main: "#566482",
+              main: "#596d94",
             },
             login: {
               main: "#fff",
@@ -113,7 +114,7 @@ const App = () => {
           >
             <NavBar handleDarkMode={handleDarkMode} darkMode={darkMode} />
             <Routes>
-              <Route path="/" exact element={<Home />} />
+              <Route path="/" exact element={<Home darkMode={darkMode} />} />
             </Routes>
           </Box>
         </ThemeProvider>

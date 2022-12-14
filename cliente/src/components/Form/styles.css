@@ -2,20 +2,12 @@
   border: "red solid 2px";
 }
 
-.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+.MuiInputBase-root div {
   display: flex;
-  flex-direction: row;
+  align-items: center;
 }
 
-.css-cveggr-MuiListItemIcon-root {
-  align-self: center;
-  justify-content: space-around;
-}
-.css-v3zyv7-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
-  display: flex;
-  flex-direction: row;
-}
-.css-qklaqr-MuiListItemIcon-root {
+.MuiInputBase-root div .MuiListItemIcon-root {
   align-self: center;
   justify-content: space-around;
 }
