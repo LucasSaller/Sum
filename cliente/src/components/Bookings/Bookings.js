@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import Booking from "./Booking/Booking";
 import { shallowEqual, useSelector } from "react-redux";
 import {
-  Card,
   CircularProgress,
   Box,
   Stack,
@@ -50,7 +48,7 @@ const Bookings = ({ setCurrentId }) => {
           spacing={3}
           paddingX={2}
           alignItems="center"
-          justifyContent="left"
+          justifyContent={user ? "left" : "space-around"}
         >
           <h5>{booking.name}</h5>
           <h5>{booking.apartment}</h5>
@@ -94,7 +92,7 @@ const Bookings = ({ setCurrentId }) => {
               <TableCell align="center">Departamento</TableCell>
               <TableCell align="center">Dia&nbsp;</TableCell>
               <TableCell align="center">Turno&nbsp;</TableCell>
-              <TableCell align="right">Acciones&nbsp;</TableCell>
+              {user && <TableCell align="right">Acciones&nbsp;</TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -144,12 +142,44 @@ const Bookings = ({ setCurrentId }) => {
     <>
       <Stack direction="column" spacing={2}>
         {matches && (
-          <Box display="flex" gap={4}>
-            <Typography variant="p">Nombre</Typography>
-            <Typography variant="p">Depto</Typography>
-            <Typography variant="p">Dia</Typography>
-            <Typography variant="p">Turno</Typography>
-            <Typography variant="p">Acciones</Typography>
+          <Box display="flex" justifyContent="space-evenly">
+            <Typography variant="p" fontSize="14px" color="headers.main">
+              Nombre
+            </Typography>
+            <Typography
+              variant="p"
+              fontSize="14px"
+              color="headers.main"
+              style={{ marginLeft: "5px" }}
+            >
+              Depto
+            </Typography>
+            <Typography
+              variant="p"
+              fontSize="14px"
+              color="headers.main"
+              style={{ marginLeft: "20px" }}
+            >
+              Dia
+            </Typography>
+            <Typography
+              variant="p"
+              fontSize="14px"
+              color="headers.main"
+              style={{ marginLeft: "30px" }}
+            >
+              Turno
+            </Typography>
+            {user && (
+              <Typography
+                variant="p"
+                fontSize="14px"
+                color="headers.main"
+                style={{ marginLeft: "30px" }}
+              >
+                Acciones
+              </Typography>
+            )}
           </Box>
         )}
         {matches ? (

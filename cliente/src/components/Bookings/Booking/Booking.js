@@ -1,20 +1,12 @@
 import React from "react";
-import { Paper, Typography, IconButton } from "@mui/material";
-import { Stack } from "@mui/system";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useDispatch } from "react-redux";
-import { deleteBooking } from "../../../actions/bookings";
-import EditIcon from "@mui/icons-material/Edit";
+import { Paper } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
-const Booking = ({ booking, setCurrentId }) => {
-  const dispatch = useDispatch();
-
+const Booking = ({ booking }) => {
   return (
     <TableContainer component={Paper}>
       <Table>

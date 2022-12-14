@@ -24,7 +24,12 @@ const Home = () => {
             spacing={3}
           >
             <Grid item justifyContent="center" xs={12} sm={4}>
-              <Typography variant="h5" m={1} color="headers.main">
+              <Typography
+                variant="h5"
+                m={1}
+                color="headers.main"
+                fontWeight="bold"
+              >
                 Gestiona tus reservas
               </Typography>
               <Box>
@@ -32,7 +37,12 @@ const Home = () => {
               </Box>
             </Grid>
             <Grid item xs={12} sm={8} style={{ marginBottom: 30 }}>
-              <Typography variant="h5" m={1} color="headers.main">
+              <Typography
+                variant="h5"
+                m={1}
+                color="headers.main"
+                fontWeight="bold"
+              >
                 Reservas
               </Typography>
               <Bookings setCurrentId={setCurrentId} />

@@ -1,3 +1,21 @@
 .Input :invalid {
   border: "red solid 2px";
 }
+
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  display: flex;
+  flex-direction: row;
+}
+
+.css-cveggr-MuiListItemIcon-root {
+  align-self: center;
+  justify-content: space-around;
+}
+.css-v3zyv7-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
+  display: flex;
+  flex-direction: row;
+}
+.css-qklaqr-MuiListItemIcon-root {
+  align-self: center;
+  justify-content: space-around;
+}

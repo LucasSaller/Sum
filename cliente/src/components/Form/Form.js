@@ -7,26 +7,29 @@ import {
   Paper,
   Button,
   MenuItem,
+  ListItemIcon,
   Snackbar,
   Alert,
   Stack,
+  ListItemText,
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { createBooking, updateBooking } from "../../actions/bookings";
 import { useLocation } from "react-router-dom";
-
+import LightModeIcon from "@mui/icons-material/LightMode";
+import BedtimeIcon from "@mui/icons-material/Bedtime";
 const Form = ({ setCurrentId, currentId }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  const [value, setValue] = React.useState(dayjs().format("DD/MM/YYYY"));
+  const [value, setValue] = React.useState(dayjs());
   const [snackBar, setSnackBar] = useState({
     open: false,
     message: "",
   });
   const [bookingData, setBookingData] = useState({
     apartment: "",
-    date: value,
+    date: value.format("DD/MM/YYY"),
     time: "",
   });
 
@@ -62,7 +65,7 @@ const Form = ({ setCurrentId, currentId }) => {
     setBookingData({
       name: "",
       apartment: "",
-      date: value?.format("DD/MM/YYYY"),
+      date: value,
       time: "",
     });
   };
@@ -154,8 +157,18 @@ const Form = ({ setCurrentId, currentId }) => {
                 setBookingData({ ...bookingData, time: e.target.value })
               }
             >
-              <MenuItem value="Dia">Dia</MenuItem>
-              <MenuItem value="Noche">Noche</MenuItem>
+              <MenuItem value="Dia" className="selectItem">
+                <ListItemIcon>
+                  <LightModeIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText disableTypography>Dia</ListItemText>
+              </MenuItem>
+              <MenuItem value="Noche" className="selectItem">
+                <ListItemIcon>
+                  <BedtimeIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText disableTypography>Noche</ListItemText>
+              </MenuItem>
             </TextField>
           </Stack>
           <Stack direction="row" paddingY={2} spacing={2}>
