@@ -47,6 +47,7 @@ const Bookings = ({ setCurrentId }) => {
           direction="row"
           spacing={3}
           paddingX={2}
+          paddingY={2}
           alignItems="center"
           justifyContent={user ? "left" : "space-around"}
         >

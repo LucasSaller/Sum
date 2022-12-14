@@ -8,8 +8,8 @@
 .area {
   background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
   width: 100%;
-  min-height: 860px;
-  position: absolute;
+  height: 100%;
+  position: fixed;
 }
 
 .circles {

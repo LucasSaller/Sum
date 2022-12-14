@@ -4,7 +4,7 @@ import { getBookings } from "../../actions/bookings";
 import { Container, Grow, Grid, Box, Typography } from "@mui/material";
 import Bookings from "../../components/Bookings/Bookings";
 import Form from "../../components/Form/Form";
-import AnimatedBackground from "../AnimatedBackground/AnimatedBackground";
+import AnimatedBackground from "./AnimatedBackground/AnimatedBackground";
 const Home = ({ darkMode }) => {
   const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState(null);
