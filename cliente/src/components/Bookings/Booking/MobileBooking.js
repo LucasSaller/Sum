@@ -11,14 +11,13 @@ const MobileBookings = ({ bookings, setCurrentId, user, past }) => {
       <Stack
         direction="row"
         spacing={3}
-        paddingX={2}
-        paddingY={2}
+        paddingX={user?.data.sub === booking.creator ? 1 : 2}
+        paddingY={user?.data.sub === booking.creator ? 1 : 2}
         alignItems="center"
         justifyContent={
           user?.data.sub === booking.creator ? "space-between" : "left"
         }
       >
-        {console.log(user, past)}
         <h5>{booking.name}</h5>
         <h5>{booking.apartment}</h5>
         <h5>{booking.date}</h5>
