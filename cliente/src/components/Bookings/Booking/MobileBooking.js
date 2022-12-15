@@ -14,16 +14,19 @@ const MobileBookings = ({ bookings, setCurrentId, user, past }) => {
         paddingX={2}
         paddingY={2}
         alignItems="center"
-        justifyContent={user && !past ? "left" : "space-around"}
+        justifyContent={
+          user?.data.sub === booking.creator ? "space-between" : "left"
+        }
       >
+        {console.log(user, past)}
         <h5>{booking.name}</h5>
         <h5>{booking.apartment}</h5>
         <h5>{booking.date}</h5>
         <h5>{booking.time}</h5>
         {user?.data.sub === booking.creator && !past && (
-          <Stack direction="column">
+          <Stack direction="column" justifyContent="end">
             <IconButton
-              size="small"
+              size="medium"
               aria-label="edit"
               color="warning"
               onClick={() => setCurrentId(booking._id)}
@@ -31,7 +34,7 @@ const MobileBookings = ({ bookings, setCurrentId, user, past }) => {
               <EditTwoToneIcon />
             </IconButton>
             <IconButton
-              size="small"
+              size="medium"
               aria-label="delete"
               color="error"
               onClick={() => dispatch(deleteBooking(booking._id))}
