@@ -38,15 +38,6 @@ const Home = ({ darkMode }) => {
               </Box>
             </Grid>
             <Grid item xs={12} sm={8} style={{ marginBottom: 30 }}>
-              {/* <Typography
-                variant="h5"
-                my={2}
-                color="headers.main"
-                fontWeight="bold"
-              >
-                Reservas
-              </Typography> */}
-
               <Bookings setCurrentId={setCurrentId} />
             </Grid>
           </Grid>

@@ -45,8 +45,10 @@ const Bookings = ({ setCurrentId }) => {
   };
   return !bookings.length ? (
     <>
-      <h4>Buscando reservas..</h4>
-      <CircularProgress />
+      <Stack spacing={3}>
+        <h4>Buscando reservas..</h4>
+        <CircularProgress />
+      </Stack>
     </>
   ) : (
     <>
