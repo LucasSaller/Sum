@@ -11,8 +11,8 @@ const MobileBookings = ({ bookings, setCurrentId, user, past }) => {
       <Stack
         direction="row"
         spacing={3}
-        paddingX={user?.data.sub === booking.creator ? 1 : 2}
-        paddingY={user?.data.sub === booking.creator ? 1 : 2}
+        paddingX={user?.data.sub === booking.creator && !past ? 1 : 2}
+        paddingY={user?.data.sub === booking.creator && !past ? 1 : 2}
         alignItems="center"
         justifyContent={
           user?.data.sub === booking.creator ? "space-between" : "left"
