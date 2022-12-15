@@ -5,10 +5,10 @@ import { Container, Grow, Grid, Box, Typography } from "@mui/material";
 import Bookings from "../../components/Bookings/Bookings";
 import Form from "../../components/Form/Form";
 import AnimatedBackground from "./AnimatedBackground/AnimatedBackground";
+
 const Home = ({ darkMode }) => {
   const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState(null);
-
   useEffect(() => {
     dispatch(getBookings());
   }, [dispatch]);
@@ -38,14 +38,15 @@ const Home = ({ darkMode }) => {
               </Box>
             </Grid>
             <Grid item xs={12} sm={8} style={{ marginBottom: 30 }}>
-              <Typography
+              {/* <Typography
                 variant="h5"
                 my={2}
                 color="headers.main"
                 fontWeight="bold"
               >
                 Reservas
-              </Typography>
+              </Typography> */}
+
               <Bookings setCurrentId={setCurrentId} />
             </Grid>
           </Grid>
