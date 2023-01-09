@@ -118,6 +118,7 @@ const Form = ({ setCurrentId, currentId }) => {
           name: user?.data.name,
         })
       );
+      clearForm();
     } else if (!existBooking(bookingData.date, bookingData.time)) {
       console.log(bookingData);
       dispatch(
