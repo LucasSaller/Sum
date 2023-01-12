@@ -25,7 +25,6 @@ import BedtimeIcon from "@mui/icons-material/Bedtime";
 const Form = ({ setCurrentId, currentId }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [value, setValue] = React.useState(dayjs());
-  console.log(value);
   const [error, setError] = useState({
     error: false,
     helperText: "",
@@ -59,7 +58,6 @@ const Form = ({ setCurrentId, currentId }) => {
 
   const handleChange = (newValue) => {
     setValue(newValue);
-    console.log(newValue);
     setBookingData({ ...bookingData, date: newValue.format("DD/MM/YYYY") });
   };
 
@@ -120,7 +118,6 @@ const Form = ({ setCurrentId, currentId }) => {
       );
       clearForm();
     } else if (!existBooking(bookingData.date, bookingData.time)) {
-      console.log(bookingData);
       dispatch(
         createBooking({
           ...bookingData,
