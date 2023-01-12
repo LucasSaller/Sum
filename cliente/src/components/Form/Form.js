@@ -21,7 +21,7 @@ import { createBooking, updateBooking } from "../../actions/bookings";
 import { useLocation } from "react-router-dom";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
-
+import WbTwilightIcon from "@mui/icons-material/WbTwilight";
 const Form = ({ setCurrentId, currentId }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [value, setValue] = React.useState(dayjs());
@@ -185,6 +185,12 @@ const Form = ({ setCurrentId, currentId }) => {
                   <LightModeIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText disableTypography>Dia</ListItemText>
+              </MenuItem>
+              <MenuItem value="Tarde" className="selectItem">
+                <ListItemIcon>
+                  <WbTwilightIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText disableTypography>Tarde</ListItemText>
               </MenuItem>
               <MenuItem value="Noche" className="selectItem">
                 <ListItemIcon>

@@ -32,7 +32,14 @@ const Bookings = ({ setCurrentId }) => {
   const sortedBookings = bookings.sort((a, b) => {
     const date1 = +makeDate(a.date);
     const date2 = +makeDate(b.date);
-    return date1 === date2 ? (a.time === "Noche" ? 1 : -1) : date1 - date2;
+    console.log(date1 - date2);
+    return date1 === date2
+      ? a.time === "Noche"
+        ? 1
+        : a.time === "Tarde" && b.time === "Dia"
+        ? 1
+        : -1
+      : date1 - date2;
   });
   const upComingBookings = sortedBookings.filter(
     (booking) =>
