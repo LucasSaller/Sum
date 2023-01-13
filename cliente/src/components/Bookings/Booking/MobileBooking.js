@@ -18,7 +18,7 @@ const MobileBookings = ({ bookings, setCurrentId, user, past }) => {
           user?.data.sub === booking.creator ? "space-between" : "left"
         }
       >
-        <h5>{booking.name}</h5>
+        <h5>{booking.name.split(" ")[0]}</h5>
         <h5>{booking.apartment}</h5>
         <h5>{booking.date}</h5>
         <h5>{booking.time}</h5>

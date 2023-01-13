@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import "./styles.css";
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
 import {
   TextField,
   Paper,
@@ -23,6 +25,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import WbTwilightIcon from "@mui/icons-material/WbTwilight";
 const Form = ({ setCurrentId, currentId }) => {
+  dayjs.extend(customParseFormat);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [value, setValue] = React.useState(dayjs());
   const [error, setError] = useState({
@@ -38,6 +41,7 @@ const Form = ({ setCurrentId, currentId }) => {
     date: value.format("DD/MM/YYYY"),
     time: "",
   });
+  console.log(bookingData);
 
   const location = useLocation();
   const dispatch = useDispatch();
@@ -53,7 +57,10 @@ const Form = ({ setCurrentId, currentId }) => {
   }, [location]);
 
   useEffect(() => {
-    if (booking) setBookingData(booking);
+    if (booking) {
+      setValue(dayjs(booking?.date, "DD/MM/YYYY"));
+      setBookingData(booking);
+    }
   }, [booking, currentId]);
 
   const handleChange = (newValue) => {
@@ -75,22 +82,7 @@ const Form = ({ setCurrentId, currentId }) => {
       time: "",
     });
   };
-  const isValidApartment = (apartment) => {
-    const regex = /\d{1,2}[A-Za-z]/gi;
-    regex.test(apartment);
-  };
-  const onBlurApartment = (event) => {
-    if (
-      event.target.value.length() >= 3 &&
-      isValidApartment(event.targe.value)
-    ) {
-      setBookingData({ ...bookingData, apartment: event.target.value });
-      setError({ error: false, helperText: "" });
-    } else {
-      setError({ error: true, helperText: "Es invalido el formato" });
-      return;
-    }
-  };
+
   const handleClose = () => {
     setSnackBar({ name: false, message: "" });
   };
@@ -125,6 +117,8 @@ const Form = ({ setCurrentId, currentId }) => {
           name: user?.data.name,
         })
       );
+
+      clearForm();
     } else {
       setSnackBar({
         open: true,
