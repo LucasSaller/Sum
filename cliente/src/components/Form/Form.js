@@ -28,10 +28,7 @@ const Form = ({ setCurrentId, currentId }) => {
   dayjs.extend(customParseFormat);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [value, setValue] = React.useState(dayjs());
-  const [error, setError] = useState({
-    error: false,
-    helperText: "",
-  });
+
   const [snackBar, setSnackBar] = useState({
     open: false,
     message: "",
@@ -41,7 +38,6 @@ const Form = ({ setCurrentId, currentId }) => {
     date: value.format("DD/MM/YYYY"),
     time: "",
   });
-  console.log(bookingData);
 
   const location = useLocation();
   const dispatch = useDispatch();

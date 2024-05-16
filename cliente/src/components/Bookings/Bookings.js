@@ -44,11 +44,10 @@ const Bookings = ({ setCurrentId }) => {
     (booking) =>
       dayjs(makeDate(booking.date)).diff(dayjs().subtract(1, "day")) > 0
   );
-
   const pastBookings = sortedBookings.filter(
     (booking) =>
       dayjs(makeDate(booking.date)).diff(dayjs().subtract(1, "day")) < 0
-  );
+  ).reverse();
   const blogPosts = pastBookings;
   const currentPosts = blogPosts.slice(indexOfFirstPost, indexOfLastPost);
 

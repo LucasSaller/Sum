@@ -5,10 +5,10 @@ const AnimatedBackground = ({ darkMode }) => {
   const colorLight = "#b9ccf8";
   return (
     <div
-      class="area"
+      className="area"
       style={{ background: `${darkMode ? colorDark : colorLight}` }}
     >
-      <ul class="circles">
+      <ul className="circles">
         <li></li>
         <li></li>
         <li></li>
