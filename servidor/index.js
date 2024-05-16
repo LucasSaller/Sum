@@ -15,7 +15,7 @@ app.get("/", (request, response) => {
 });
 
 const CONNECTION_URL =
-  "mongodb+srv://lsaller:DZ9LwfOsNt6YJ6Ly@cluster0.zzcukbh.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://lsaller:DZ9LwfOsNt6YJ6Ly@cluster0.zzcukbh.mongodb.net/test?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 5000;
 
 mongoose
