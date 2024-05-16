@@ -35,7 +35,7 @@ const DesktopBookings = ({ setCurrentId, bookings, past }) => {
           {bookings.map((booking, id) => (
             <TableRow key={id}>
               <TableCell component="th" scope="row">
-                {booking.name.split(" ")[0]}
+                {booking.name}
               </TableCell>
               <TableCell align="center">{booking.apartment}</TableCell>
               <TableCell align="center">{booking.date}</TableCell>
